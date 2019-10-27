@@ -36,6 +36,12 @@ def get_user_input():
     question_amount = input("請輸入題數: ")
     return file_list, question_amount
 
+def check_data_empty(data):
+    for i in data:
+        if len(i) == 0:
+            return False
+    return True
+
 def load_data(path_list):
     english_list = []
     mandarin_list = []
@@ -44,6 +50,9 @@ def load_data(path_list):
             for line in f:
                 try:
                     data = line.rstrip("\n").split(",")
+                    # if line only contain ",", for example ",,,,,,", then neglect the line
+                    if not check_data_empty(data):
+                        continue
                     if len(data) > 3:
                         english_list.append(data[1])
                         english_list.append(data[4])
